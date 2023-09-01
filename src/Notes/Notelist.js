@@ -14,7 +14,16 @@ class Notelist extends React.Component {
     this.deleteNote=this.deleteNote.bind(this);
     this.edit=this.edit.bind(this)
   }
+  componentDidUpdate() {
+      localStorage.setItem("notes_data", JSON.stringify(this.state.notes_data));
+    }
   
+    componentWillMount() {
+      const storedData = localStorage.getItem("notes_data");
+      if (storedData) {
+        this.setState({ notes_data: JSON.parse(storedData) });
+      }
+    }
   deleteNote(id){
    const updatedData=this.state.notes_data.filter(note=>note.id!=id)
    this.setState({notes_data:updatedData}) 
